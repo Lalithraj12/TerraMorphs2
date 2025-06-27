@@ -7,7 +7,6 @@ let renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// === Mini Map UI ===
 const mapUI = document.createElement('div');
 mapUI.id = 'lab-map';
 mapUI.style.position = 'fixed';
@@ -249,7 +248,6 @@ function animate() {
   TWEEN.update();
   renderer.render(scene, camera);
 
-// === UPDATE MINI MAP ===
 mapCtx.clearRect(0, 0, 160, 140);
 mapCtx.fillStyle = '#0f0';
 const scale = 2;
@@ -261,7 +259,6 @@ mapCtx.arc(px, pz, 4, 0, Math.PI * 2);
 mapCtx.fill();
 mapCtx.fillText("You", px + 5, pz + 5);
 
-// === Add room markers ===
 const roomLabels = [
   { x: 0, z: 14, label: 'GE' },
   { x: 0, z: -14, label: 'BA' },
@@ -463,7 +460,6 @@ function createEquipmentRoom(x, z, color, name) {
   
   scene.add(room);
 }
-// Fullscreen Equipment Interface
 const equipmentInterface = document.createElement('div');
 equipmentInterface.style.position = 'fixed';
 equipmentInterface.style.top = '0';
@@ -526,8 +522,8 @@ function createEquipment(x, z, color, name) {
   base.position.y = 0.5;
   group.add(base);
 
-  group.name = name; // Assign name to group for interaction
-  clickableObjects.push(group); // Add group to clickableObjects instead of base
+  group.name = name;
+  clickableObjects.push(group);
 
   const labelCanvas = document.createElement('canvas');
   labelCanvas.width = 256;
@@ -638,10 +634,8 @@ function showFullScreenSimulation(name) {
     overlay.parentNode.removeChild(overlay);
     const aiCoreBox = new THREE.Box3().setFromObject(aiCore);
     if (aiCoreBox.containsPoint(scientist.position)) {
-      scientist.position.x += 1; // shift to avoid re-trigger
-    }
-  }
-};
+      scientist.position.x += 1; 
+  }}};
 
   overlay.appendChild(title);
   overlay.appendChild(content);
