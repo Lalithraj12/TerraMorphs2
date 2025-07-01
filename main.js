@@ -153,7 +153,7 @@ function animate() {
 
   if (inAICore && !overlay) {
     showFullScreenSimulation('Lab Control Dashboard');
-  } else if (!inAICore && overlay) {
+  } else if (!inAICore && overlay && overlay.dataset.source === 'Lab Control Dashboard') {
     overlay.remove();
   }
   if (aiCoreBox.containsPoint(scientist.position)) {
@@ -548,7 +548,7 @@ function createEquipment(x, z, color, name) {
   group.position.set(x, 0, z);
 
   group.userData.onClick = () => {
-  equipmentInterface.style.display = 'flex';
+  showFullScreenSimulation(name);
   const clickSound = new Audio("sounds/click.mp3");
   clickSound.volume = 0.4;
   clickSound.play().catch(() => {});
@@ -568,8 +568,10 @@ createEquipmentRoom(-18, -18, 0xccff00, "Tissue Synthesizer");
 createEquipmentRoom(18, 18, 0x00ccff, "Quantum Scanner");
 
 function showFullScreenSimulation(name) {
+  equipmentInterface.style.display = 'none';
   const overlay = document.createElement('div');
   overlay.id = 'simulation-overlay';
+overlay.dataset.source = name;
   overlay.style.position = 'fixed';
   overlay.style.top = 0;
   overlay.style.left = 0;
@@ -582,7 +584,8 @@ function showFullScreenSimulation(name) {
   overlay.style.alignItems = 'center';
   overlay.style.justifyContent = 'center';
   overlay.style.fontFamily = 'monospace';
-  overlay.style.zIndex = 1000;
+  overlay.style.zIndex = 9999;
+overlay.style.pointerEvents = 'auto';
   overlay.style.border = '4px solid lime';
   overlay.style.boxShadow = '0 0 25px lime';
   overlay.style.backdropFilter = 'blur(6px)';
@@ -598,8 +601,8 @@ function showFullScreenSimulation(name) {
   content.style.background = 'rgba(0,255,0,0.1)';
   content.style.border = '2px solid #0f0';
   content.style.borderRadius = '10px';
-  content.style.width = '60%';
-  content.style.height = '40%';
+  content.style.width = '100%';
+  content.style.height = '100%';
   content.style.display = 'flex';
   content.style.alignItems = 'center';
   content.style.justifyContent = 'center';
@@ -614,6 +617,18 @@ function showFullScreenSimulation(name) {
         🧬 Gene Sync Status: OK<br>
         📶 Network: Connected
       </div>`;
+  } else if (name === 'Genome Editor') {
+    const moduleName = 'genome_editor';
+    import(`./game/genome_editor/game.js`).then(module => {
+      if (module && typeof module.run === 'function') {
+        module.run(content);
+      } else {
+        content.textContent = '🚧 Simulation module missing run() method.';
+      }
+    }).catch(err => {
+      console.error(err);
+      content.textContent = '🚧 Error loading simulation.';
+    });
   } else {
     content.textContent = '🚧 Simulation content coming soon...';
   }
@@ -635,9 +650,11 @@ function showFullScreenSimulation(name) {
     const aiCoreBox = new THREE.Box3().setFromObject(aiCore);
     if (aiCoreBox.containsPoint(scientist.position)) {
       scientist.position.x += 1; 
-  }}};
+    }
+  }
+};
 
-  overlay.appendChild(title);
+  // Title removed for fullscreen display
   overlay.appendChild(content);
   overlay.appendChild(exitBtn);
   document.body.appendChild(overlay);
