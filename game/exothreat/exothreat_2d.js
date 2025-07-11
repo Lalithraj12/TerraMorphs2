@@ -355,14 +355,12 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-// Attach global event listeners for buttons
 window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("helpBtn")?.addEventListener("click", showHelp);
   document.getElementById("exitBtn")?.addEventListener("click", saveAndExit);
   document.querySelector("#retryBtn")?.addEventListener("click", () => location.href = 'index.html#lab');
 });
 
-// Only show gameContainer after verifying genome
 let genomeValid = loadGenome();
 if (!genomeValid) {
   showGenomeWarning();
