@@ -1,6 +1,3 @@
-// Trait Extraction Lab - Full JavaScript Module
-// Gameplay: Player selects 1 trait per species (10 total), max budget 50, timer 1 minute
-
 (function () {
   const speciesData = [
     {
