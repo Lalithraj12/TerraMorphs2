@@ -1,5 +1,3 @@
-// bioForge.js - Condition Simulation Game Module
-
 (function() {
   const conditionData = {
     "Water Overload": {
@@ -164,8 +162,8 @@
 
   function renderBioForgeUI(containerId) {
   const container = document.getElementById(containerId);
-  container.style.backgroundColor = "#ffffff";   // set white background
-  container.style.color = "#000000";             // ensure text is black
+  container.style.backgroundColor = "#ffffff";   
+  container.style.color = "#000000";             
   container.style.padding = "30px";
   container.style.minHeight = "100vh";
 
