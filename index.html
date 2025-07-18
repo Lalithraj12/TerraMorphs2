@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="data:,">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TerraMorphs</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #192241;
+    }
+  </style>
+</head>
+<body>
+  <div id="gameContainer"></div>
+
+  <script>
+    if (!localStorage.getItem("planetName")) {
+      window.location.href = "/planetIntro.html";
+    } else {
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = "main.js";
+      document.body.appendChild(script);
+    }
+  </script>
+</body>
+</html>
